@@ -41,11 +41,6 @@ data class GetPopupDetailResponse(
 )
 
 data class GetPopupListByCategoryResponse(
-    val count: Int,
-    val popups:  List<GetPopupListByCategoryPopups>,
-)
-
-data class GetPopupListByCategoryPopups(
     val popupId: String,
     val title: String,
     val description: String,

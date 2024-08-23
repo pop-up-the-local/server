@@ -36,7 +36,7 @@ class PopupController(
 
     @GetMapping("/list")
     fun getPopupListByCategory(@RequestParam(required = false) category: String?,
-                               @RequestParam(required = false) city: String?): BaseResponse<GetPopupListByCategoryResponse> {
+                               @RequestParam(required = false) city: String?): BaseResponse<List<GetPopupListByCategoryResponse>> {
 
         return BaseResponse(msg = "$category 카테고리 팝업 목록 조회 성공", data = popupService.getPopupList(city, category))
 

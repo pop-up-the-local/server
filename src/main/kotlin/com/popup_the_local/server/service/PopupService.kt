@@ -60,7 +60,7 @@ class PopupService(
         )
     }
 
-    fun getPopupList(city: String?, category: String?): GetPopupListByCategoryResponse {
+    fun getPopupList(city: String?, category: String?): List<GetPopupListByCategoryResponse> {
 
         val categoryEnum = try {
             category?.let {
@@ -76,10 +76,8 @@ class PopupService(
             city = city
             )
 
-        return GetPopupListByCategoryResponse(
-            count = popupList.size,
-            popups = popupList.map { popup ->
-                GetPopupListByCategoryPopups(
+        return popupList.map { popup ->
+                GetPopupListByCategoryResponse(
                     title = popup.title,
                     description = popup.description,
                     status = popup.status,
@@ -91,7 +89,7 @@ class PopupService(
                     image = popup.images[0]
                 )
             }
-        )
+
 
     }
 }
