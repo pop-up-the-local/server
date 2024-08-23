@@ -17,5 +17,17 @@ data class Comment(
     @DBRef
     val popup: Popup,
 
-    var content: String?,
-)
+    var content: String,
+) {
+    companion object {
+        fun createComment(
+            member: Member,
+            content: String,
+            popup: Popup,
+        ) = Comment(
+            member = member,
+            content = content,
+            popup = popup,
+        )
+    }
+}
