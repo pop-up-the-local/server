@@ -1,5 +1,6 @@
 package com.popup_the_local.server.controller
 
+import com.popup_the_local.server.common.MEMBER_ID
 import com.popup_the_local.server.common.responsebody.BaseResponse
 import com.popup_the_local.server.dto.GetMemberDetailResponse
 import com.popup_the_local.server.service.MemberService

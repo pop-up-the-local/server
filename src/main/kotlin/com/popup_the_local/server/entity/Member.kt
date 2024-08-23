@@ -1,6 +1,7 @@
 package com.popup_the_local.server.entity
 
 import org.bson.types.ObjectId
+import org.example.springmongodb.entity.Role
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
@@ -28,7 +29,7 @@ data class Member (
 
     var businessNumber: String? = null,
 
-) {
+    ) {
     companion object {
         fun createMember(socialId: String,
                          email: String,
