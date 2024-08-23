@@ -60,8 +60,21 @@ class PopupService(
         )
     }
 
-    fun getPopupListByCategory(category: Category): GetPopupListByCategoryResponse {
-        val popupList = popupRepository.findByCategoryOrderByStartDate(category)
+    fun getPopupList(city: String?, category: String?): GetPopupListByCategoryResponse {
+
+        val categoryEnum = try {
+            category?.let {
+                Category.valueOf(category)
+            }
+
+        }catch (e:Exception){
+            throw InvalidInputException(fieldName = "category")
+        }
+
+        val popupList = popupRepository.findByCategoryAndCity(
+            category = categoryEnum,
+            city = city
+            )
 
         return GetPopupListByCategoryResponse(
             count = popupList.size,
@@ -74,7 +87,7 @@ class PopupService(
                     endDate = popup.toStringEndDate(),
                     address = popup.address.toString(),
                     popupId = popup.id,
-                    category = category,
+                    category = popup.category,
                     image = popup.images[0]
                 )
             }

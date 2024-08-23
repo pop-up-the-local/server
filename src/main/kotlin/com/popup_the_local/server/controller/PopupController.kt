@@ -6,7 +6,6 @@ import com.popup_the_local.server.dto.CreatePopupRequest
 import com.popup_the_local.server.dto.CreatePopupResponse
 import com.popup_the_local.server.dto.GetPopupDetailResponse
 import com.popup_the_local.server.dto.GetPopupListByCategoryResponse
-import com.popup_the_local.server.entity.Category
 import com.popup_the_local.server.entity.Popup
 import com.popup_the_local.server.repository.PopupRepository
 import com.popup_the_local.server.service.PopupService
@@ -35,11 +34,11 @@ class PopupController(
         return BaseResponse(msg = "멤버 별 팝업 목록 조회 성공", data = popupRepository.findByMemberId(memberId))
     }
 
-    @GetMapping("category/{category}")
-    fun getPopupListByCategory(@PathVariable category: String): BaseResponse<GetPopupListByCategoryResponse> {
-        Category.valueOf(category)
-            .apply {
-                return BaseResponse(msg = "$category 카테고리 팝업 목록 조회 성공", data = popupService.getPopupListByCategory(this))
-            }
+    @GetMapping("/list")
+    fun getPopupListByCategory(@RequestParam(required = false) category: String?,
+                               @RequestParam(required = false) city: String?): BaseResponse<GetPopupListByCategoryResponse> {
+
+        return BaseResponse(msg = "$category 카테고리 팝업 목록 조회 성공", data = popupService.getPopupList(city, category))
+
     }
 }
