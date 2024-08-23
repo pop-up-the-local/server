@@ -8,6 +8,7 @@ import com.popup_the_local.server.entity.Category
 import com.popup_the_local.server.entity.Popup
 import com.popup_the_local.server.repository.MemberRepository
 import com.popup_the_local.server.repository.PopupRepository
+import com.popup_the_local.server.repository.PopupRepositoryCustom
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 class PopupService(
     private val memberRepository: MemberRepository,
     private val popupRepository: PopupRepository,
-    private val cloudStorageService: CloudStorageService
+    private val cloudStorageService: CloudStorageService,
+    private val popupRepositoryCustom: PopupRepositoryCustom
 ) {
 
     fun createPopup(memberId: String, request: CreatePopupRequest): CreatePopupResponse {
@@ -71,7 +73,7 @@ class PopupService(
             throw InvalidInputException(fieldName = "category")
         }
 
-        val popupList = popupRepository.findByCategoryAndCity(
+        val popupList = popupRepositoryCustom.findByCategoryAndCity(
             category = categoryEnum,
             city = city
             )
