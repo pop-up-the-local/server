@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository
 interface BookmarkRepository: MongoRepository<Bookmark, String> {
 
     fun findByMemberId(memberId: String): List<Bookmark>
+
+    fun findByMemberIdAndPopupId(memberId: String, popupId: String): Bookmark?
 }

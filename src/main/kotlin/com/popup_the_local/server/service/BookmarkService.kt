@@ -46,4 +46,8 @@ class BookmarkService(
 
         return bookmarkList
     }
+
+    fun deleteBookmark(bookmarkId: String) {
+        bookmarkRepository.deleteById(bookmarkId)
+    }
 }

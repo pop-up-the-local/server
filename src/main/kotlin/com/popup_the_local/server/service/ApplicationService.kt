@@ -8,13 +8,16 @@ import com.popup_the_local.server.repository.ApplicationRepository
 import com.popup_the_local.server.repository.MemberRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class ApplicationService(
     private val memberRepository: MemberRepository,
     private val applicationRepository: ApplicationRepository
 ) {
 
+    @Transactional
     fun applyPopup(memberId: String, request: ApplyPopupRequest): ApplyPopupResponse {
         val member = memberRepository.findByIdOrNull(memberId) ?: throw InvalidInputException(fieldName = "member")
 

@@ -38,6 +38,7 @@ data class GetPopupDetailResponse(
     val address: String,
     val status: PopupStatus,
     val images: List<String>,
+    val bookmarkId: String?,
 )
 
 data class GetPopupListByCategoryResponse(

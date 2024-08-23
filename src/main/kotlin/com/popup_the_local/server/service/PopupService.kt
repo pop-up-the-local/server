@@ -1,11 +1,13 @@
 package com.popup_the_local.server.service
 
+import com.popup_the_local.server.common.MEMBER_ID
 import com.popup_the_local.server.common.cloudstorage.CloudStorageService
 import com.popup_the_local.server.common.responsebody.InvalidInputException
 import com.popup_the_local.server.dto.*
 import com.popup_the_local.server.entity.Address
 import com.popup_the_local.server.entity.Category
 import com.popup_the_local.server.entity.Popup
+import com.popup_the_local.server.repository.BookmarkRepository
 import com.popup_the_local.server.repository.MemberRepository
 import com.popup_the_local.server.repository.PopupRepository
 import com.popup_the_local.server.repository.PopupRepositoryCustom
@@ -17,7 +19,8 @@ class PopupService(
     private val memberRepository: MemberRepository,
     private val popupRepository: PopupRepository,
     private val cloudStorageService: CloudStorageService,
-    private val popupRepositoryCustom: PopupRepositoryCustom
+    private val popupRepositoryCustom: PopupRepositoryCustom,
+    private val bookmarkRepository: BookmarkRepository
 ) {
 
     fun createPopup(memberId: String, request: CreatePopupRequest): CreatePopupResponse {
@@ -48,6 +51,7 @@ class PopupService(
 
     fun getPopupDetail(popupId: String): GetPopupDetailResponse {
         val popup = popupRepository.findByIdOrNull(popupId) ?: throw InvalidInputException(fieldName = "popup")
+        val bookmark = bookmarkRepository.findByMemberIdAndPopupId(MEMBER_ID, popupId)
 
         return GetPopupDetailResponse(
             popupId = popup.id,
@@ -58,7 +62,8 @@ class PopupService(
             endDate = popup.toStringEndDate(),
             category = popup.category,
             images = popup.images,
-            address = popup.address.toString()
+            address = popup.address.toString(),
+            bookmarkId  = bookmark?.id
         )
     }
 
