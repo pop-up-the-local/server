@@ -18,3 +18,11 @@ data class ApplyPopupRequest(
 data class ApplyPopupResponse(
     val applicationId: String,
 )
+
+data class RecommendEventResponse (
+    val content: List<String>,
+)
+
+data class RecommendEventRequest (
+    val description: String,
+)
