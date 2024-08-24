@@ -12,7 +12,7 @@ data class ApplyPopupRequest(
     val description: String,
     val category: Category,
     val images: List<MultipartFile>,
-    val address: Address,
+    val address: String,
 )
 
 

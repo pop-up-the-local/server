@@ -4,6 +4,7 @@ import com.popup_the_local.server.common.cloudstorage.CloudStorageService
 import com.popup_the_local.server.common.responsebody.InvalidInputException
 import com.popup_the_local.server.dto.ApplyPopupRequest
 import com.popup_the_local.server.dto.ApplyPopupResponse
+import com.popup_the_local.server.entity.Address
 import com.popup_the_local.server.entity.Application
 import com.popup_the_local.server.repository.ApplicationRepository
 import com.popup_the_local.server.repository.MemberRepository
@@ -26,6 +27,8 @@ class ApplicationService(
             cloudStorageService.uploadObject(image)
         }.toMutableList()
 
+        val strings = request.address.split(",")
+
 
         val application = Application.createApplication(
             title = request.title,
@@ -34,7 +37,7 @@ class ApplicationService(
             endDate = request.endDate,
             category = request.category,
             member = member,
-            address = request.address,
+            address = Address(city = strings[0], street = strings[1], zipCode = strings[2]),
             images = imageUrlList.toMutableList()
 
         ).apply {
