@@ -1,5 +1,6 @@
 package com.popup_the_local.server.service
 
+import com.popup_the_local.server.common.cloudstorage.CloudStorageService
 import com.popup_the_local.server.common.responsebody.InvalidInputException
 import com.popup_the_local.server.dto.ApplyPopupRequest
 import com.popup_the_local.server.dto.ApplyPopupResponse
@@ -14,12 +15,17 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class ApplicationService(
     private val memberRepository: MemberRepository,
-    private val applicationRepository: ApplicationRepository
+    private val applicationRepository: ApplicationRepository,
+    private val cloudStorageService: CloudStorageService
 ) {
 
     @Transactional
     fun applyPopup(memberId: String, request: ApplyPopupRequest): ApplyPopupResponse {
         val member = memberRepository.findByIdOrNull(memberId) ?: throw InvalidInputException(fieldName = "member")
+        val imageUrlList: MutableList<String> = request.images.map { image ->
+            cloudStorageService.uploadObject(image)
+        }.toMutableList()
+
 
         val application = Application.createApplication(
             title = request.title,
@@ -28,7 +34,9 @@ class ApplicationService(
             endDate = request.endDate,
             category = request.category,
             member = member,
-            address = request.address
+            address = request.address,
+            images = imageUrlList.toMutableList()
+
         ).apply {
             applicationRepository.save(this)
         }

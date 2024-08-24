@@ -30,10 +30,12 @@ data class Application(
 
     var status: ApplicationStatus = ApplicationStatus.WAITED,
 
-    val address: Address
+    val address: Address,
+
+    val images: MutableList<String>,
 ){
     companion object {
-        fun createApplication(member: Member, title: String, startDate: LocalDate, endDate: LocalDate, description: String, category: Category,  address: Address)
+        fun createApplication(member: Member, title: String, startDate: LocalDate, endDate: LocalDate, description: String, category: Category,  address: Address, images: MutableList<String> )
         = Application(
             member = member,
             title = title,
@@ -41,7 +43,8 @@ data class Application(
             endDate = endDate,
             description = description,
             category = category,
-            address = address
+            address = address,
+            images = images
         )
     }
 }
